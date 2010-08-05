@@ -1,0 +1,5 @@
+foo.txt #comment1
+bar.sql
+
+#comment2
+baz.exe
