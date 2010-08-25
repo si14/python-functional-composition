@@ -16,7 +16,7 @@ def show_variant(num, lines):
 
 path_prefix = os.path.abspath(os.path.curdir)
 
-#самый простой подход
+#most simple approach
 f = open("test.txt")
 lines_stripped = map(lambda s: s.strip(), f)
 lines_meaningful = filter(lambda s: len(s) > 0 and s[0:1] != "#", lines_stripped)
@@ -24,20 +24,20 @@ lines_clean = map(comment_cutter, lines_meaningful)
 file_pathes = map(lambda s: os.path.join(path_prefix, s), lines_clean)
 show_variant(1, file_pathes)
 
-#с использованием вложенных функций и list comprehension
+#list comprehensions + nested functions
 file_pathes = map(lambda s: os.path.join(path_prefix, s),
                   map(comment_cutter,
                       filter(lambda s: len(s) > 0 and s[0:1] != "#",
                              [line.strip() for line in open("test.txt")])))
 show_variant(2, file_pathes)
 
-#ленивый вариант на generator expressions
+#lazy generator expressions
 lines_stripped = (s.strip() for s in open("test.txt"))
 lines_clean = (comment_cutter(s) for s in lines_stripped if len(s) > 0 and s[0:1] != "#")
 file_pathes = (os.path.join(path_prefix, s) for s in lines_clean)
 show_variant(3, file_pathes)
 
-#вариант с использованием функциональной композиции
+#functional composition
 from composable import *
 @composable
 def empty_tester(x):
