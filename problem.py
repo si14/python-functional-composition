@@ -41,7 +41,7 @@ show_variant(3, file_pathes)
 from pyfuncomp import *
 @composable
 def empty_tester(x):
-    return len(x) > 0 and x[0:1] != "#"
+    return len(x) > 0 and x[0] != "#"
 
 file_pathes = (c(open) >> c(str.strip).map >> c(comment_cutter).map >>
                empty_tester.filter >> c(os.path.join)[path_prefix, _].map)("test.txt")
