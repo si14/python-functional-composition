@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+#http://github.com/si14/python-functional-composition
 
 from functools import partial
 import itertools
