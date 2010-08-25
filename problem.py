@@ -13,7 +13,7 @@ def show_variant(num, lines):
     for l in file_pathes:
         print l
     print "------"
-        
+
 path_prefix = os.path.abspath(os.path.curdir)
 
 #самый простой подход
@@ -38,11 +38,11 @@ file_pathes = (os.path.join(path_prefix, s) for s in lines_clean)
 show_variant(3, file_pathes)
 
 #вариант с использованием функциональной композиции
-from composable import composable, c
+from composable import *
+@composable
+def empty_tester(x):
+    return len(x) > 0 and x[0:1] != "#"
 
-@composable #использование декоратора
-def comment_cutter_c(s):
-    return comment_cutter(s)
-    
-file_pathes = (c(open) >> c(str.strip) >> comment_cutter_c)("test.txt")
+file_pathes = (c(open) >> c(str.strip).map >> c(comment_cutter).map >>
+               empty_tester.filter >> c(os.path.join)[path_prefix, _].map)("test.txt")
 show_variant(4, file_pathes)
