@@ -14,7 +14,12 @@ class ComposableFunction(object):
         return isinstance(x, ToBeSubstituted)
 
     def __init__(self, func, args=[], kwargs={}):
-        self.func = func
+        if hasattr(func, "__call__"):
+            self.func = func
+        elif isinstance(func, str):
+            self.func = lambda *x: eval(func % x)
+        else:
+            raise TypeError("Argument must be a string or callable")
         self.args = args
         self.kwargs = kwargs
 
@@ -90,9 +95,6 @@ if __name__ == "__main__":
     print (f2 >> f3)(2) #-5
     print (c(float) << f1 << f2)(4) #14.0
     print (sqrsum[_, 1] << f1)(2) #17
-    print (sqrsum[_, 1].map)([1, 2, 3, 4, 5])
+    print (sqrsum[_, _].map)([1, 2, 3, 4, 5]) #[2, 8, 18, 32, 50]
+    print (c(lambda x: x * 2).map >> c("[x * %s for x in %s]")[3, _])([1, 2, 3]) #[6, 12, 18]
 
-"""
-TODO:
--add support of "eval"
-"""
