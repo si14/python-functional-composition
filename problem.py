@@ -38,7 +38,7 @@ file_pathes = (os.path.join(path_prefix, s) for s in lines_clean)
 show_variant(3, file_pathes)
 
 #functional composition
-from composable import *
+from pyfuncomp import *
 @composable
 def empty_tester(x):
     return len(x) > 0 and x[0:1] != "#"

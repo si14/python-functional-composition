@@ -69,7 +69,7 @@ if __name__ == "__main__":
 
     @composable
     def f2(x):
-        return  x + 3
+        return x + 3
 
     @composable
     def f3(x):
